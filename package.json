@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "dotenv -- npm run tsc",
-    "tsc": "tsx src/index.ts",
-    "init": "tsc --init"
+    "start": "dotenv -- tsx src/index.ts",
+    "build": "tsc --outDir ./dist"
+  },
+  "bin": {
+    "cw": "./dist/index.js"
   },
   "keywords": [],
   "author": "",

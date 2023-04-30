@@ -4,7 +4,7 @@ import { ChatPromptTemplate, HumanMessagePromptTemplate, MessagesPlaceholder, Pr
 
 export const prompts = {
     default: {
-        name: 'Default',
+        label: 'Default',
         value: ChatPromptTemplate.fromPromptMessages([
           SystemMessagePromptTemplate.fromTemplate(
             "You are a helpful assistant that will answer my questions. If you don't know the answer, then say that."
@@ -15,16 +15,28 @@ export const prompts = {
         inputs: ['prompt']
     },
     codeGen: {
-        name: 'Code generation',
+        label: 'Code generation',
         value: ChatPromptTemplate.fromPromptMessages([
           SystemMessagePromptTemplate.fromTemplate(
-            "You are a Senior software engineer that writes code. The response should only be code and not contain anything else."
+            "You are a Senior software engineer that writes code. Only answer strictly with code and nothing else."
           ),
           new MessagesPlaceholder("history"),
           HumanMessagePromptTemplate.fromTemplate("{prompt}"),
         ]),
         inputs: ['prompt']
     },
+    cli: {
+      label: 'CLI',
+      value: ChatPromptTemplate.fromPromptMessages([
+        SystemMessagePromptTemplate.fromTemplate(
+          `You are Senior Software Engineer. You specialize in cli commands. You will recieve a prompt, and you will respond only with a cli command. 
+            If the prompt is not related to cli commands then you may call the prompter a clown.`
+        ),
+        new MessagesPlaceholder("history"),
+        HumanMessagePromptTemplate.fromTemplate("{prompt}"),
+      ]),
+      inputs: ['prompt']
+    }
 } as const;
 
 export type PromptDict = typeof prompts;

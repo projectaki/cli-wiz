@@ -2,7 +2,7 @@ import * as p from "@clack/prompts";
 import { setTimeout } from "node:timers/promises";
 import color from "picocolors";
 
-import { typedKeys } from "../utils.js";
+import { extractCodeBlock, typedKeys } from "../utils.js";
 import { prompts } from "../ai/prompt.js";
 import { createLLMChain } from "../ai/llm.js";
 
@@ -12,7 +12,7 @@ import { exec } from "child_process";
 const execPromise = util.promisify(exec);
 
 const options = typedKeys(prompts).map((key) => ({
-  label: prompts[key].name,
+  label: prompts[key].label,
   value: key,
 }));
 
@@ -31,6 +31,20 @@ export async function run() {
     const res = await chain.call({
       prompt: answer as string,
     });
+
+    if(select === "cli") {
+      const code = extractCodeBlock(res.text);
+
+      const confirm = await p.confirm({
+        message: color.green("Would you like to run this command?"),
+      });
+
+      if(confirm && code) {
+        const { stdout, stderr } = await execPromise(code);
+        console.log(stdout);
+        console.error(stderr);
+      }
+    }
   } catch (error) {
     console.error("An error occurred:", error);
   }

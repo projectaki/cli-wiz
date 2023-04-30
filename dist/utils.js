@@ -1,13 +1,9 @@
-export function typedKeys<T extends {}>(obj: T) {
-    return Object.keys(obj) as Array<keyof T>;
+export function typedKeys(obj) {
+    return Object.keys(obj);
 }
-
-export function extractCodeBlock(markdownString: string) {
+export function extractCodeBlock(markdownString) {
     const regex = /```[\w-]*(\r\n|\r|\n)([^`]+)```/g;
-
     const matches = regex.exec(markdownString);
-
     const codeBlock = matches && matches.length > 1 ? matches[2] : null;
-    
     return codeBlock;
-  }
+}
