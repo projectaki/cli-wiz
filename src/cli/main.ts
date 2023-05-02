@@ -1,5 +1,4 @@
 import * as p from "@clack/prompts";
-import { setTimeout } from "node:timers/promises";
 import color from "picocolors";
 
 import { extractCodeBlock, typedKeys } from "../utils.js";
@@ -36,7 +35,7 @@ export async function run() {
       const code = extractCodeBlock(res.text);
 
       const confirm = await p.confirm({
-        message: color.green("Would you like to run this command?"),
+        message: color.green("Would you like to run the following command? Command:" + code ),
       });
 
       if(confirm && code) {

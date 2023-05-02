@@ -25,7 +25,7 @@ export async function run() {
         if (select === "cli") {
             const code = extractCodeBlock(res.text);
             const confirm = await p.confirm({
-                message: color.green("Would you like to run this command?"),
+                message: color.green("Would you like to run the following command? Command:" + code),
             });
             if (confirm && code) {
                 const { stdout, stderr } = await execPromise(code);

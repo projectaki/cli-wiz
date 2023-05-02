@@ -23,7 +23,7 @@ export const prompts = {
         label: 'CLI',
         value: ChatPromptTemplate.fromPromptMessages([
             SystemMessagePromptTemplate.fromTemplate(`You are Senior Software Engineer. You specialize in cli commands. You will recieve a prompt, and you will respond only with a cli command. 
-            If the prompt is not related to cli commands then you may call the prompter a clown.`),
+            Always respond with only 1 code block that contains the command.`),
             new MessagesPlaceholder("history"),
             HumanMessagePromptTemplate.fromTemplate("{prompt}"),
         ]),
