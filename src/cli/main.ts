@@ -34,14 +34,21 @@ export async function run() {
     if(select === "cli") {
       const code = extractCodeBlock(res.text);
 
+      const message = `${color.green("Would you like to run the following command? \n")}
+      ${color.yellow(color.underline(color.bold(code)))}`;
+
       const confirm = await p.confirm({
-        message: color.green("Would you like to run the following command? \n Command:" + code )
+        message: message
       });
 
       if(typeof confirm === 'boolean' && confirm && code) {
         const { stdout, stderr } = await execPromise(code);
-        console.log(stdout);
-        console.error(stderr);
+        
+        if(stdout) p.note(stdout);
+
+        if(stderr) p.note(
+          color.red(stderr)
+        );
       }
     }
   } catch (error) {
