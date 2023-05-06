@@ -36,6 +36,18 @@ export const prompts = {
         HumanMessagePromptTemplate.fromTemplate("{prompt}"),
       ]),
       inputs: ['prompt']
+    },
+    scrum: {
+      label: 'Scrum',
+      value: ChatPromptTemplate.fromPromptMessages([
+        SystemMessagePromptTemplate.fromTemplate(
+          `You are a Scrum Master. You will recieve a large task, and you will help break them down into smaller tasks.
+            A tasks can have subtasks, but only 1 level deep. Return the list of tasks in markdown.`
+        ),
+        new MessagesPlaceholder("history"),
+        HumanMessagePromptTemplate.fromTemplate("{prompt}"),
+      ]),
+      inputs: ['prompt']
     }
 } as const;
 
